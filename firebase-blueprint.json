@@ -1,0 +1,330 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "Luxury YSL product item in the catalog across 3 main categories.",
+      "type": "object",
+      "properties": {
+        "sku": {
+          "type": "string",
+          "maxLength": 40,
+          "pattern": "^[A-Z0-9\\-]+$",
+          "description": "Unique product SKU code"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 120,
+          "description": "Product display title"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "Parfum & Lip Oil",
+            "Tas & Sepatu",
+            "Jam Tangan & Baju"
+          ],
+          "description": "One of the 3 curated luxury categories"
+        },
+        "subType": {
+          "type": "string",
+          "enum": [
+            "Perfume",
+            "Lip Oil",
+            "Tas",
+            "Sepatu",
+            "Jam Tangan",
+            "Baju"
+          ],
+          "description": "Specific product line type"
+        },
+        "price": {
+          "type": "number",
+          "description": "Price in IDR"
+        },
+        "stock": {
+          "type": "number",
+          "description": "Available inventory units"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 600,
+          "description": "Editorial description and notes"
+        },
+        "volumeOrSize": {
+          "type": "string",
+          "maxLength": 60,
+          "description": "Size, volume, or dimensions specification"
+        },
+        "imageUrl": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Product image asset path or URL"
+        },
+        "featured": {
+          "type": "boolean",
+          "description": "Whether highlighted in the flagship showcase"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last inventory or metadata update timestamp"
+        }
+      },
+      "required": [
+        "sku",
+        "name",
+        "category",
+        "subType",
+        "price",
+        "stock",
+        "description",
+        "volumeOrSize",
+        "imageUrl",
+        "featured",
+        "updatedAt"
+      ]
+    },
+    "Customer": {
+      "title": "Customer",
+      "description": "Registered customer profile and shipping metadata.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "maxLength": 128,
+          "description": "Firebase Auth UID"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100,
+          "description": "Customer full name"
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Customer email address"
+        },
+        "phone": {
+          "type": "string",
+          "maxLength": 30,
+          "description": "Contact phone number / WhatsApp"
+        },
+        "address": {
+          "type": "string",
+          "maxLength": 400,
+          "description": "Primary delivery address"
+        },
+        "city": {
+          "type": "string",
+          "maxLength": 80,
+          "description": "City / Region"
+        },
+        "postalCode": {
+          "type": "string",
+          "maxLength": 15,
+          "description": "Postal code"
+        },
+        "totalOrders": {
+          "type": "number",
+          "description": "Count of orders placed"
+        },
+        "totalSpent": {
+          "type": "number",
+          "description": "Cumulative approved/paid spend in IDR"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Profile update timestamp"
+        }
+      },
+      "required": [
+        "uid",
+        "name",
+        "email",
+        "phone",
+        "address",
+        "city",
+        "postalCode",
+        "totalOrders",
+        "totalSpent",
+        "updatedAt"
+      ]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase order with payment proof and approval workflow.",
+      "type": "object",
+      "properties": {
+        "orderNumber": {
+          "type": "string",
+          "maxLength": 40,
+          "pattern": "^YSL\\-[0-9]{4,10}$",
+          "description": "Human-readable order code"
+        },
+        "customerUid": {
+          "type": "string",
+          "maxLength": 128,
+          "description": "Customer UID who placed the order"
+        },
+        "customerName": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Customer full name"
+        },
+        "customerEmail": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Customer email"
+        },
+        "customerPhone": {
+          "type": "string",
+          "maxLength": 30,
+          "description": "Customer phone number"
+        },
+        "shippingAddress": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Full formatted shipping destination"
+        },
+        "itemsSummary": {
+          "type": "string",
+          "maxLength": 1500,
+          "description": "Formatted summary of ordered items and quantities"
+        },
+        "itemCount": {
+          "type": "number",
+          "description": "Total units ordered"
+        },
+        "totalAmount": {
+          "type": "number",
+          "description": "Total order price in IDR"
+        },
+        "paymentMethod": {
+          "type": "string",
+          "enum": [
+            "Bank Transfer BCA",
+            "Bank Transfer Mandiri",
+            "QRIS YSL Beaute"
+          ],
+          "description": "Selected payment channel"
+        },
+        "paymentAccountSender": {
+          "type": "string",
+          "maxLength": 120,
+          "description": "Sender account holder name and bank reference"
+        },
+        "paymentReferenceNumber": {
+          "type": "string",
+          "maxLength": 80,
+          "description": "Bank transaction reference code"
+        },
+        "paymentProofImage": {
+          "type": "string",
+          "maxLength": 350000,
+          "description": "Compressed data URL or receipt image URL uploaded by customer"
+        },
+        "paymentStatus": {
+          "type": "string",
+          "enum": [
+            "waiting_approval",
+            "approved",
+            "rejected"
+          ],
+          "description": "Approval status of customer payment proof"
+        },
+        "orderStatus": {
+          "type": "string",
+          "enum": [
+            "pending_verification",
+            "processing",
+            "shipped",
+            "completed",
+            "cancelled"
+          ],
+          "description": "Fulfillment lifecycle status"
+        },
+        "adminNotes": {
+          "type": "string",
+          "maxLength": 400,
+          "description": "Verification notes from Admin"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Order creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last status update timestamp"
+        }
+      },
+      "required": [
+        "orderNumber",
+        "customerUid",
+        "customerName",
+        "customerEmail",
+        "customerPhone",
+        "shippingAddress",
+        "itemsSummary",
+        "itemCount",
+        "totalAmount",
+        "paymentMethod",
+        "paymentAccountSender",
+        "paymentReferenceNumber",
+        "paymentProofImage",
+        "paymentStatus",
+        "orderStatus",
+        "adminNotes",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Authorized store administrator record.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 150
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin"]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "email", "role", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Publicly readable catalog of 12 YSL Beauty & Maison products; writable by admins or stock decrements on checkout."
+    },
+    "/customers/{customerId}": {
+      "schema": { "$ref": "#/entities/Customer" },
+      "description": "Customer profiles isolated to owner or admin."
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer orders and payment proofs isolated to the ordering customer or store admin."
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/AdminUser" },
+      "description": "Admin role registry."
+    }
+  }
+}

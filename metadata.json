@@ -1,0 +1,6 @@
+{
+  "name": "YSL Beauté & Maison Marketplace",
+  "description": "Luxury e-commerce webstore and administration suite for YSL Beauty, Maroquinerie, Horology, and Haute Couture connected to real-time Firestore database.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
